@@ -1,18 +1,674 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello from Render + DB</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Message Parser - Save weeks in development</title>
     <style>
-      body { font-family: sans-serif; padding: 2rem; }
-      section { margin-bottom: 1rem; }
-      code { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 4px; }
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #ffffff;
+            --foreground: #1a1a1a;
+            --card: #ffffff;
+            --card-foreground: #1a1a1a;
+            --primary: #030213;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f1f4;
+            --secondary-foreground: #030213;
+            --muted: #ececf0;
+            --muted-foreground: #717182;
+            --accent: #e9ebef;
+            --accent-foreground: #030213;
+            --border: rgba(0, 0, 0, 0.1);
+            --input-background: #f3f3f5;
+            --radius: 0.625rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: var(--foreground);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Layout */
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+
+        .space-y-8 > * + * {
+            margin-top: 2rem;
+        }
+
+        .gap-3 {
+            gap: 0.75rem;
+        }
+
+        .gap-6 {
+            gap: 1.5rem;
+        }
+
+        .gap-8 {
+            gap: 2rem;
+        }
+
+        .gap-12 {
+            gap: 3rem;
+        }
+
+        .gap-16 {
+            gap: 4rem;
+        }
+
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .py-16 {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .p-6 {
+            padding: 1.5rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .mb-16 {
+            margin-bottom: 4rem;
+        }
+
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+
+        /* Components */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            transition: box-shadow 0.15s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            border: none;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--input-background);
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .bg-muted {
+            background-color: var(--muted);
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .text-muted-foreground {
+            color: var(--muted-foreground);
+        }
+
+        .shrink-0 {
+            flex-shrink: 0;
+        }
+
+        .size-5 {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .size-8 {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .size-12 {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .aspect-video {
+            aspect-ratio: 16 / 9;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, rgba(3, 2, 19, 0.1), rgba(3, 2, 19, 0.05));
+        }
+
+        .border-t {
+            border-top: 1px solid var(--border);
+        }
+
+        .max-w-2xl {
+            max-width: 42rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .leading-relaxed {
+            line-height: 1.625;
+        }
+
+        .leading-tight {
+            line-height: 1.25;
+        }
+
+        .icon-bg {
+            background-color: rgba(3, 2, 19, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Video styling */
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gap-12 {
+                gap: 2rem;
+            }
+            .gap-16 {
+                gap: 2rem;
+            }
+            h1 {
+                font-size: 1.875rem;
+            }
+            .py-12 {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-4 {
+                grid-template-columns: 1fr;
+            }
+            .flex {
+                flex-direction: column;
+            }
+            .gap-3 {
+                gap: 0.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(236, 236, 240, 0.3);
+        }
+
+        footer a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.15s ease-in-out;
+        }
+
+        footer a:hover {
+            color: var(--foreground);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .features-section {
+            background-color: rgba(236, 236, 240, 0.3);
+        }
     </style>
-  </head>
-  <body>
-    <h1>Hello from Render! 🎉</h1>
-    <section>
-      <h2>Database Test</h2>
-      <p id="dbMessage">Loading...</p>
-    </section>
-  </body>
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Hero Section -->
+        <div class="container py-12">
+            <div class="grid grid-cols-2 gap-12 items-center">
+                <!-- Left Column - Content -->
+                <div class="space-y-8">
+                    <div class="space-y-6">
+                        <h1 class="leading-tight">
+                            Save weeks in developing and maintaining your binary message parser
+                        </h1>
+                        
+                        <h2 class="text-muted-foreground leading-relaxed">
+                            A powerful and configurable binary message parser designed to convert bits into readable JSON and back
+                        </h2>
+                    </div>
+
+                    <!-- Features List -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <svg class="size-5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Simulation frameworks (hardware-in-the-loop): feed and capture binary streams in real time.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="size-5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Monitoring systems & alarm generation: decode critical signals into human-readable events.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="size-5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Machine learning dataset generation: convert raw binary logs into structured JSON for training.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="size-5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Traffic analyzers: inspect, decode, and visualize protocol traffic at bit-level precision.</span>
+                        </div>
+                    </div>
+
+                    <!-- Email Signup Form -->
+                    <div class="card p-6 bg-muted">
+                        <div class="space-y-4">
+                            <div>
+                                <h3>Get Early Access</h3>
+                                <p id="dbMessage" class="text-muted-foreground">
+                                    Join the waitlist and be the first to know when we launch.
+                                </p>
+                            </div>
+
+                            <form id="emailForm" class="flex gap-3">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                    id="emailInput"
+                                    required
+                                    class="input"
+                                />
+                                <button type="submit" class="button shrink-0">
+                                    Join Waitlist
+                                    <svg class="ml-2 size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+                            <div id="successMessage" class="hidden flex items-center gap-3 text-primary">
+                                <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Thanks! We'll be in touch soon.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Video -->
+                <div>
+                    <div class="aspect-video bg-muted rounded-lg shadow-xl" style="overflow: hidden;">
+                        <!-- Replace with your actual video -->
+                        <video 
+                            controls 
+                            poster="video-thumbnail.jpg"
+                            preload="metadata"
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                        >
+                            <source src="demo-video.mp4" type="video/mp4" />
+                            <source src="demo-video.webm" type="video/webm" />
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Fallback placeholder -->
+                        <div class="bg-gradient flex items-center justify-center" style="height: 100%;">
+                            <div class="text-center space-y-4">
+                                <div class="icon-bg p-6">
+                                    <svg class="size-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-primary">Product Demo Video</p>
+                                    <p style="font-size: 0.875rem;" class="text-muted-foreground">
+                                        Replace with your video file
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features and Benefits Section -->
+        <div class="features-section py-16">
+            <div class="container">
+                <div class="text-center space-y-4 mb-16">
+                    <h2 style="color: var(--foreground); font-size: 1.5rem;">Features & Benefits</h2>
+                    <p class="text-muted-foreground max-w-2xl mx-auto">
+                        Everything you need to handle binary message parsing with confidence and efficiency
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-4 gap-8">
+                    <!-- Wide Applicability -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Wide Applicability</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Ideal for IoT, automotive, aerospace, railway and more industries.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Zero Compromise -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Zero Compromise</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Define complex formats with bit-level precision and conditions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- No Code -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>No Code</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Write a simple text file, no coding required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Max Flexibility -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Max Flexibility</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Modular architecture for future expansions via scripting.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- High Performance -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>High Performance</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Fast and efficient (de)serialization engine.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Easy Integration -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Easy Integration</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Lightweight and linkable shared library.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Format -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Multi-Format</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Manage multiple formats and versions in a structured catalog.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Anywhere -->
+                    <div class="card p-6 text-center space-y-4">
+                        <div class="icon-bg p-4">
+                            <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Anywhere</h4>
+                            <p class="text-muted-foreground" style="font-size: 0.875rem;">
+                                Design your message format on your pc and deploy anywhere.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="border-t py-8">
+            <div class="container">
+                <div class="flex items-center justify-center gap-6" style="flex-direction: row;">
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        © 2025 Binary Message Parser. All rights reserved.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Email form functionality
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value;
+            
+            if (email) {
+                // Hide the form
+                document.getElementById('emailForm').style.display = 'none';
+                
+                // Show success message
+                document.getElementById('successMessage').classList.remove('hidden');
+                
+                // Here you would typically send the email to your backend
+                console.log('Email submitted:', email);
+            }
+        });
+    </script>
+</body>
 </html>
