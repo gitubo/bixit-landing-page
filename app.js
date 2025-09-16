@@ -2,22 +2,22 @@ const express = require("express");
 const { Pool } = require("pg");
 const app = express();
 const port = process.env.PORT || 3001;
-const dbUrl = process.env.DATABASE_URL || "not set";
+
+app.use(express.json()); // middleware per leggere JSON dal body
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // Render richiede SSL
+  ssl: { rejectUnauthorized: false }
 });
 
+// Endpoint test DB
 app.get("/", async (req, res) => {
   let dbMessage = "";
 
   try {
-    // Query 1: orario dal DB
     const nowResult = await pool.query("SELECT NOW()");
     const now = nowResult.rows[0].now;
 
-    // Query 2: conteggio record in waiting_list
     const countResult = await pool.query("SELECT COUNT(1) AS total FROM waiting_list");
     const total = countResult.rows[0].total;
 
@@ -54,9 +54,33 @@ app.get("/", async (req, res) => {
   res.type("html").send(html);
 });
 
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// 🔹 Endpoint per aggiungere email
+app.post("/add_email", async (req, res) => {
+  const { email } = req.body;
 
+  if (!email || typeof email !== "string") {
+    return res.status(400).json({ error: "Invalid email" });
+  }
+
+  try {
+    const query = `
+      INSERT INTO waiting_list (email, created_at)
+      VALUES ($1, NOW())
+      RETURNING id, email, created_at
+    `;
+    const result = await pool.query(query, [email]);
+
+    res.json({
+      success: true,
+      message: "Email added successfully",
+      data: result.rows[0]
+    });
+  } catch (err) {
+    console.error("❌ Insert error:", err);
+    res.status(500).json({ error: "Database insert failed" });
+  }
+});
+
+const server = app.listen(port, () => console.log(`App listening on port ${port}!`));
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
-
-
