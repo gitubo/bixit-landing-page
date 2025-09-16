@@ -13,8 +13,19 @@ app.get("/", async (req, res) => {
   let dbMessage = "";
 
   try {
-    const result = await pool.query("SELECT NOW()");
-    dbMessage = `✅ Connected to DB! Current time: ${result.rows[0].now}`;
+    // Query 1: orario dal DB
+    const nowResult = await pool.query("SELECT NOW()");
+    const now = nowResult.rows[0].now;
+
+    // Query 2: conteggio record in waiting_list
+    const countResult = await pool.query("SELECT COUNT(1) AS total FROM waiting_list");
+    const total = countResult.rows[0].total;
+
+    dbMessage = `
+      ✅ Connected to DB!<br>
+      🕒 Current time: ${now}<br>
+      📊 waiting_list entries: ${total}
+    `;
   } catch (err) {
     console.error("❌ DB error:", err);
     dbMessage = `❌ Database connection failed: ${err.message}`;
