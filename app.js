@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
+const dbUrl = process.env.DATABASE_URL || "not set";
 
 app.get("/", (req, res) => res.type('html').send(html));
 
@@ -14,6 +15,7 @@ const html = `
 <html>
   <head>
     <title>Hello from Render!</title>
+    <p><strong>DATABASE_URL:</strong> <code>${dbUrl}</code></p>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
       setTimeout(() => {
