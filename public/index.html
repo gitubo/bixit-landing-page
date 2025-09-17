@@ -179,18 +179,29 @@
         .ml-2 {
             margin-left: 0.5rem;
         }
+        .hero-section {
+          position: relative; /* crea un contesto per ::before */
+          overflow: hidden;   /* evita che l’effetto esca fuori */
+        }
+        
         .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 40%, rgba(37, 99, 235, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
-            animation: float 6s ease-in-out infinite;
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 40%, rgba(37, 99, 235, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
+          animation: float 6s ease-in-out infinite;
+          z-index: 0; /* sta sotto il contenuto */
+        }
+        
+        .hero-section > * {
+          position: relative;
+          z-index: 1; /* il contenuto sta sopra */
         }
         /* Components */
         .card {
