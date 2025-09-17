@@ -45,7 +45,7 @@ app.post("/add_email", async (req, res) => {
   if (!email) return res.status(400).json({ error: "Email is required" });
 
   try {
-    await pool.query("INSERT INTO waiting_list(email, created_at) VALUES($1, NOW())", [email]);
+    await pool.query("INSERT INTO waiting_list(email, timestamp) VALUES($1, NOW())", [email]);
     res.json({ success: true, email });
   } catch (err) {
     console.error(err);
