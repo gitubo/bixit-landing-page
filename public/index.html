@@ -213,6 +213,45 @@
           box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
           background: black; /* colore sotto al video */
         }
+
+        /* Wrapper per posizionare il pulsante sopra al video */
+        .video-wrapper {
+          position: relative;
+          display: inline-block;
+        }
+        
+        /* Video */
+        .video-wrapper video {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+          border-radius: 0.75rem;
+          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
+          background: black;
+        }
+        
+        /* Pulsante sopra al video */
+        .try-button {
+          position: absolute;
+          bottom: 1.5rem;    /* distanza dal fondo del video */
+          right: 1.5rem;     /* distanza dal lato destro */
+          background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* blu hero */
+          color: white;
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.5rem;
+          font-weight: bold;
+          font-size: 1rem;
+          text-decoration: none;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        /* Effetto hover */
+        .try-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
         
         /* Components */
         .card {
@@ -464,11 +503,19 @@
     
                     <!-- Right Column - Video -->
                     <div class="right-col">
-                      <video autoplay muted loop playsinline preload="metadata">
-                        <source src="bixit_custom_compressed.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                      <div class="video-wrapper">
+                        <video autoplay muted loop playsinline preload="metadata">
+                          <source src="bixit_custom_compressed.mp4" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                    
+                        <!-- Pulsante sopra al video -->
+                        <a href="https://bixit-ui.onrender.com/" target="_blank" class="try-button">
+                          Try me!
+                        </a>
+                      </div>
                     </div>
+
                 </div>
             </div>
         </div>
