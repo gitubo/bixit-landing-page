@@ -222,6 +222,8 @@
           justify-content: center;
           align-items: center;
           background: #0f172a; /* fallback scuro dietro al video */
+          border-radius: 0.75rem;   /* stesso raggio del video */
+          overflow: hidden;         /* nasconde lo sfondo fuori dagli angoli */
         }
         
         /* Video senza tagli */
@@ -229,10 +231,11 @@
           width: 100%;
           height: auto;
           object-fit: contain;
-          border-radius: 0.75rem;
+          border-radius: 0.75rem; /* resta per sicurezza */
           box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
           background: black;
         }
+
 
 
         /* Wrapper per posizionare il pulsante sopra al video */
@@ -489,7 +492,7 @@
                                 Save weeks in developing and maintaining your parser
                             </h1>
                             
-                            <h2 class="text-muted-foreground leading-relaxed">
+                            <h2 class="text-muted leading-relaxed">
                                 A powerful and configurable binary message parser designed to convert bits into readable JSON and back
                             </h2>
                         </div>
