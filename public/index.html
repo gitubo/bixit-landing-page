@@ -181,46 +181,36 @@
             margin-left: 0.5rem;
         }
         
+        /* Hero section */
         .hero-section {
-              position: relative; /* crea un contesto per ::before */
-              overflow: hidden;   /* evita che l’effetto esca fuori */
-            min-height: 120vh; /* prima era 100vh → +20% */
-            display: flex;
-            align-items: center;
+          position: relative;
+          overflow: hidden;
+          min-height: 120vh;      /* +20% in altezza */
+          display: flex;
+          align-items: center;
         }
-            
-            .hero-section::before {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background: 
-                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 40%, rgba(37, 99, 235, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
-              animation: float 6s ease-in-out infinite;
-              z-index: 0; /* sta sotto il contenuto */
-            }
-            
-            .hero-section > * {
-              position: relative;
-              z-index: 1; /* il contenuto sta sopra */
-            }
         
-            .hero-section .grid-cols-2 {
-              grid-template-columns: 1fr 1.3fr; /* testo : video */
-            }
-            
-            /* Video più grande e proporzionato */
-            .hero-section video {
-              width: 115%;        /* leggermente più largo */
-              height: 115%;       /* più alto */
-              object-fit: cover;  /* riempie senza distorsioni */
-              border-radius: 0.75rem; /* arrotondamento maggiore */
-              box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
-            }
+        /* Grid sbilanciata: più spazio al video */
+        .hero-section .grid-cols-2 {
+          grid-template-columns: 1fr 1.3fr; /* testo : video */
+        }
+        
+        /* Right column che contiene il video */
+        .hero-section .right-col {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        /* Video senza tagli */
+        .hero-section .right-col video {
+          width: 100%;            /* si adatta al contenitore */
+          height: auto;           /* mantiene proporzioni */
+          object-fit: contain;    /* nessun crop */
+          border-radius: 0.75rem; /* angoli arrotondati */
+          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
+        }
+
         
         /* Components */
         .card {
@@ -471,20 +461,11 @@
                     </div>
     
                     <!-- Right Column - Video -->
-                    <div>                        
-                        <div class="bg-muted rounded-lg shadow-xl" style="overflow: hidden;">
-                            <video 
-                                autoplay
-                                muted
-                                loop
-                                playsinline
-                                preload="metadata"
-                                
-                            >
-                                <source src="bixit_custom_compressed.mp4" type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
+                    <div class="right-col">
+                      <video autoplay muted loop playsinline preload="metadata">
+                        <source src="bixit_custom_compressed.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
                     </div>
                 </div>
             </div>
