@@ -188,12 +188,32 @@
           min-height: 70vh;  
           display: flex;
           align-items: center;
-          background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* sfondo blu */
+          background: linear-gradient(135deg, #2563eb, #60a5fa); /* blu → azzurro chiaro */
+        }
+        
+        .hero-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: 
+            radial-gradient(circle at 20% 20%, rgba(191, 219, 254, 0.5) 0%, transparent 50%), /* celeste molto chiaro */
+            radial-gradient(circle at 80% 40%, rgba(147, 197, 253, 0.4) 0%, transparent 50%), /* azzurro tenue */
+            radial-gradient(circle at 40% 80%, rgba(96, 165, 250, 0.35) 0%, transparent 50%); /* blu più morbido */
+          animation: float 6s ease-in-out infinite;
+          z-index: 0;
+        }
+        
+        .hero-section > * {
+          position: relative;
+          z-index: 1; /* tutto il contenuto sopra i gradienti */
         }
         
         /* Grid sbilanciata: più spazio al video */
         .hero-section .grid-cols-2 {
-          grid-template-columns: 1fr 1.3fr; /* testo : video */
+          grid-template-columns: 1fr 1.3fr;
         }
         
         /* Right column che contiene il video */
@@ -201,18 +221,19 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background: #0f172a; /* fallback scuro dietro il video */
+          background: #0f172a; /* fallback scuro dietro al video */
         }
         
         /* Video senza tagli */
         .hero-section .right-col video {
           width: 100%;
           height: auto;
-          object-fit: contain;    /* niente crop */
+          object-fit: contain;
           border-radius: 0.75rem;
           box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
-          background: black; /* colore sotto al video */
+          background: black;
         }
+
 
         /* Wrapper per posizionare il pulsante sopra al video */
         .video-wrapper {
@@ -230,27 +251,28 @@
           background: black;
         }
         
-        /* Pulsante sopra al video */
         .try-button {
-          position: absolute;
-          bottom: 1.5rem;    /* distanza dal fondo del video */
-          right: 1.5rem;     /* distanza dal lato destro */
-          background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* blu hero */
-          color: white;
-          padding: 0.75rem 1.5rem;
-          border-radius: 0.5rem;
-          font-weight: bold;
-          font-size: 1rem;
-          text-decoration: none;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        /* Effetto hover */
-        .try-button:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
+              position: absolute;
+              bottom: 1.5rem;
+              right: 1.5rem;
+              background: #bfdbfe;      /* blu chiaro coerente con hero (blue-200) */
+              color: #1e3a8a;           /* blu scuro per contrasto */
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              font-weight: bold;
+              font-size: 1rem;
+              text-decoration: none;
+              box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+              transform: rotate(-30deg);
+              transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            }
+            
+            .try-button:hover {
+              transform: rotate(-30deg) scale(1.05);
+              background: #93c5fd;   /* leggermente più saturo al hover */
+              box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            }
+
 
         
         /* Components */
