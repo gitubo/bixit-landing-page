@@ -185,9 +185,10 @@
         .hero-section {
           position: relative;
           overflow: hidden;
-          min-height: 120vh;      /* +20% in altezza */
+          min-height: 70vh;  
           display: flex;
           align-items: center;
+          background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* sfondo blu */
         }
         
         /* Grid sbilanciata: più spazio al video */
@@ -200,17 +201,18 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          background: #0f172a; /* fallback scuro dietro il video */
         }
         
         /* Video senza tagli */
         .hero-section .right-col video {
-          width: 100%;            /* si adatta al contenitore */
-          height: auto;           /* mantiene proporzioni */
-          object-fit: contain;    /* nessun crop */
-          border-radius: 0.75rem; /* angoli arrotondati */
+          width: 100%;
+          height: auto;
+          object-fit: contain;    /* niente crop */
+          border-radius: 0.75rem;
           box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
+          background: black; /* colore sotto al video */
         }
-
         
         /* Components */
         .card {
@@ -423,7 +425,7 @@
                     <div class="space-y-8">
                         <div class="space-y-6">
                             <h1 class="leading-tight">
-                                Save weeks in developing and maintaining your binary message parser
+                                Save weeks in developing and maintaining your parser
                             </h1>
                             
                             <h2 class="text-muted-foreground leading-relaxed">
