@@ -13,20 +13,20 @@
         }
 
         :root {
-            --background: #ffffff;
-            --foreground: #1a1a1a;
-            --card: #ffffff;
-            --card-foreground: #1a1a1a;
-            --primary: #030213;
-            --primary-foreground: #ffffff;
-            --secondary: #f1f1f4;
-            --secondary-foreground: #030213;
-            --muted: #ececf0;
-            --muted-foreground: #717182;
-            --accent: #e9ebef;
-            --accent-foreground: #030213;
-            --border: rgba(0, 0, 0, 0.1);
-            --input-background: #f3f3f5;
+            --background: #0F172A;               /* sfondo scuro principale */
+            --foreground: #F8FAFC;               /* testo principale quasi bianco */
+            --card: #1E293B;                     /* card leggermente più chiara */
+            --card-foreground: #F8FAFC;
+            --primary: #06B6D4;                  /* accento principale (ciano brillante) */
+            --primary-foreground: #0F172A;       /* testo scuro sopra pulsanti ciano */
+            --secondary: #A3E635;                /* CTA lime/neon */
+            --secondary-foreground: #0F172A;
+            --muted: #1E293B;                    /* aree secondarie (grigio/blu scuro) */
+            --muted-foreground: #94A3B8;         /* testo secondario */
+            --accent: #06B6D4;                   /* lo stesso del primary per coerenza */
+            --accent-foreground: #0F172A;
+            --border: rgba(148, 163, 184, 0.2);  /* grigio-blu chiaro trasparente */
+            --input-background: #1E293B;         /* input coerenti con card */
             --radius: 0.625rem;
         }
 
@@ -188,7 +188,7 @@
           min-height: 70vh;  
           display: flex;
           align-items: center;
-          background: linear-gradient(135deg, #2563eb, #60a5fa); /* blu → azzurro chiaro */
+          background: linear-gradient(135deg, #0F172A, #1E293B);
         }
         
         .hero-section::before {
@@ -266,12 +266,12 @@
               font-size: 1.5rem;
               text-decoration: none;
               box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-              transform: rotate(-30deg) translate(40px, 40px);
+              transform: rotate(-30deg) ;
               transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             }
             
             .try-button:hover {
-              transform: rotate(-30deg) translate(40px, 40px) scale(1.05);
+              transform: rotate(-30deg) scale(1.05);
               background: #93c5fd;   /* leggermente più saturo al hover */
               box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             }
