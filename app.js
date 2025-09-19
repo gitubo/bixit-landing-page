@@ -18,6 +18,10 @@ const pool = new Pool({
 
 // GET "/" ora serve il file index.html
 app.get("/", async (req, res) => {
+
+  fetch("https://bixit-ui.onrender.com").catch(err => console.error("❌ UI trigger failed:", err));
+  fetch("https://bixit-server-0-1.onrender.com").catch(err => console.error("❌ Server trigger failed:", err));
+
   try {
     const nowResult = await pool.query("SELECT NOW()");
     const countResult = await pool.query("SELECT COUNT(1) FROM waiting_list");
