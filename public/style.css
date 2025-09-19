@@ -429,6 +429,9 @@ video {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
+    .hero-section .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {
@@ -446,6 +449,9 @@ video {
     }
     .container {
         padding: 0 1rem;
+    }
+    .hero-section .grid-cols-2 {
+        grid-template-columns: 1fr;
     }
 }
 
