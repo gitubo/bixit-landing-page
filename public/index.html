@@ -236,48 +236,44 @@
           background: black;
         }
 
-
-
-        /* Wrapper per posizionare il pulsante sopra al video */
+        /* Wrapper video con posizione relativa per l’overlay */
         .video-wrapper {
           position: relative;
           display: inline-block;
+          border-radius: 0.75rem;
+          overflow: hidden; /* mantiene gli angoli arrotondati */
+          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
+          background: black; /* fallback sotto il video */
         }
         
         /* Video */
         .video-wrapper video {
           width: 100%;
           height: auto;
+          display: block;
           object-fit: contain;
           border-radius: 0.75rem;
-          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
-          background: black;
         }
         
+        /* Bottone sopra al video */
         .try-button {
-              position: absolute;
-              bottom: 1.5rem;
-              right: 1.5rem;
-              background: #bfdbfe;      /* blu chiaro coerente con hero (blue-200) */
-              color: #1e3a8a;           /* blu scuro per contrasto */
-              padding: 0.4rem 0.8rem;
-              border-radius: 0.5rem;
-              font-weight: bold;
-              font-size: 1.5rem;
-              text-decoration: none;
-              box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-              transform: rotate(-30deg) translate(40px, 40px);
-              transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            }
-            
-            .try-button:hover {
-              transform: rotate(-30deg) translate(40px, 40px) scale(1.05);
-              background: #93c5fd;   /* leggermente più saturo al hover */
-              box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            }
-
-
+          position: absolute;
+          top: 1rem;          /* distanza dal bordo superiore */
+          right: 1rem;        /* distanza dal bordo destro */
+          background: #bfdbfe; /* blu molto leggero coerente con hero */
+          color: #0f172a;      /* testo scuro */
+          padding: 0.5rem 1rem;
+          font-weight: bold;
+          border-radius: 0.5rem;
+          transform: rotate(-30deg);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+          transition: background 0.3s ease, transform 0.3s ease;
+        }
         
+        .try-button:hover {
+          background: #93c5fd; /* blu un po' più deciso al hover */
+          transform: rotate(-30deg) scale(1.05);
+        }        
         /* Components */
         .card {
             background-color: var(--card);
