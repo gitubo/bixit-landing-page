@@ -4,500 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Message Parser - Save weeks in development</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --background: #FFFFFF;             /* sfondo principale */
-            --foreground: #111827;             /* testo primario */
-            --card: #F3F4F6;                   /* superfici intermedie */
-            --card-foreground: #111827;
-            --primary: #2563EB;                /* accento blu */
-            --primary-foreground: #FFFFFF;     /* testo bianco sopra bottoni blu */
-            --secondary: #F97316;              /* CTA arancione */
-            --secondary-foreground: #FFFFFF;
-            --muted: #E5E7EB;                  /* grigio chiaro */
-            --muted-foreground: #78788c;       /* testo secondario */
-            --accent: #2563EB;                 /* stesso del primary */
-            --accent-foreground: #FFFFFF;
-            --border: rgba(17, 24, 39, 0.1);   /* grigio scuro molto trasparente */
-            --input-background: #FFFFFF;       /* input su bianco */
-            --radius: 0.625rem;
-        }
-
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.5;
-            color: var(--foreground);
-            background-color: var(--background);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: 2.25rem;
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        h2 {
-            font-size: 1.25rem;
-            font-style: italic;
-            font-weight: 500;
-            line-height: 1.4;
-            color: var(--muted);
-            margin-bottom: 2rem;
-        }
-
-        h3 {
-            font-size: 1.125rem;
-            font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 0.5rem;
-            color: var(--muted-foreground);
-        }
-
-        h4 {
-            font-size: 1rem;
-            font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-
-        /* Layout */
-        .min-h-screen {
-            min-height: 100vh;
-        }
-
-        .grid {
-            display: grid;
-        }
-
-        .grid-cols-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .grid-cols-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-center {
-            justify-content: center;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .space-y-4 > * + * {
-            margin-top: 1rem;
-        }
-
-        .space-y-6 > * + * {
-            margin-top: 1.5rem;
-        }
-
-        .space-y-8 > * + * {
-            margin-top: 2rem;
-        }
-
-        .gap-3 {
-            gap: 0.5rem;
-        }
-
-        .gap-6 {
-            gap: 0.75rem;
-        }
-
-        .gap-8 {
-            gap: 1rem;
-        }
-
-        .gap-12 {
-            gap: 1.5rem;
-        }
-
-        .gap-16 {
-            gap: 2rem;
-        }
-
-        .py-12 {
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-
-        .py-16 {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-
-        .py-8 {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .px-6 {
-            padding-left: 0.75rem;
-            padding-right: 7.75rem;
-        }
-
-        .p-6 {
-            padding: 1.5rem;
-        }
-
-        .p-4 {
-            padding: 1rem;
-        }
-
-        .mb-16 {
-            margin-bottom: 4rem;
-        }
-
-        .ml-2 {
-            margin-left: 0.5rem;
-        }
-        
-        /* Hero section */
-        .hero-section {
-          position: relative;
-          overflow: hidden;
-          min-height: 70vh;  
-          display: flex;
-          align-items: center;
-          background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
-        }
-        
-        .hero-section::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: 
-            radial-gradient(circle at 20% 20%, rgba(191, 219, 254, 0.5) 0%, transparent 50%), /* celeste molto chiaro */
-            radial-gradient(circle at 80% 40%, rgba(147, 197, 253, 0.4) 0%, transparent 50%), /* azzurro tenue */
-            radial-gradient(circle at 40% 80%, rgba(96, 165, 250, 0.35) 0%, transparent 50%); /* blu più morbido */
-          animation: float 6s ease-in-out infinite;
-          z-index: 0;
-        }
-        
-        .hero-section > * {
-          position: relative;
-          z-index: 1; /* tutto il contenuto sopra i gradienti */
-        }
-        
-        /* Grid sbilanciata: più spazio al video */
-        .hero-section .grid-cols-2 {
-          grid-template-columns: 1fr 1.3fr;
-        }
-        
-        /* Right column che contiene il video */
-        .hero-section .right-col {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #0f172a; /* fallback scuro dietro al video */
-          border-radius: 0.75rem;   /* stesso raggio del video */
-          overflow: hidden;         /* nasconde lo sfondo fuori dagli angoli */
-        }
-        
-        /* Video senza tagli */
-        .hero-section .right-col video {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-          border-radius: 0.75rem; /* resta per sicurezza */
-          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
-          background: black;
-        }
-
-
-
-        /* Wrapper per posizionare il pulsante sopra al video */
-        .video-wrapper {
-          position: relative;
-          display: inline-block;
-        }
-        
-        /* Video */
-        .video-wrapper video {
-          width: 100%;
-          height: auto;
-          object-fit: contain;
-          border-radius: 0.75rem;
-          box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
-          background: black;
-        }
-        
-        .try-button {
-              position: absolute;
-              bottom: 1.75rem;
-              right: 1.75rem;
-              background: #bfdbfe;      /* blu chiaro coerente con hero (blue-200) */
-              color: #1e3a8a;           /* blu scuro per contrasto */
-              padding: 0.4rem 0.8rem;
-              border-radius: 0.5rem;
-              font-weight: bold;
-              font-size: 1.5rem;
-              text-decoration: none;
-              box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-              transform: rotate(-30deg) ;
-              transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            }
-            
-            .try-button:hover {
-              transform: rotate(-30deg) scale(1.1);
-              background: #93c5fd;   /* leggermente più saturo al hover */
-              box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            }
-
-
-        
-        /* Components */
-        .card {
-            background-color: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-            transition: box-shadow 0.15s ease-in-out;
-        }
-
-        .card:hover {
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.15s ease-in-out;
-            cursor: pointer;
-            border: none;
-            padding: 0.5rem 1rem;
-            background-color: var(--primary);
-            color: var(--primary-foreground);
-        }
-
-        .button:hover {
-            opacity: 0.9;
-        }
-
-        .input {
-            flex: 1;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background-color: var(--input-background);
-            font-size: 1rem;
-            transition: border-color 0.15s ease-in-out;
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .bg-muted {
-            background-color: var(--muted);
-        }
-
-        .text-primary {
-            color: var(--primary);
-        }
-
-        .text-muted-foreground {
-            color: var(--muted-foreground);
-        }
-
-        .shrink-0 {
-            flex-shrink: 0;
-        }
-
-        .size-5 {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-
-        .size-8 {
-            width: 2rem;
-            height: 2rem;
-        }
-
-        .size-12 {
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .aspect-video {
-            aspect-ratio: 16 / 9;
-        }
-
-        .rounded-lg {
-            border-radius: 0.5rem;
-        }
-
-        .rounded-full {
-            border-radius: 9999px;
-        }
-
-        .shadow-xl {
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-        }
-
-        .bg-gradient {
-            background: linear-gradient(135deg, rgba(3, 2, 19, 0.1), rgba(3, 2, 19, 0.05));
-        }
-
-        .border-t {
-            border-top: 1px solid var(--border);
-        }
-
-        .max-w-2xl {
-            max-width: 42rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .leading-relaxed {
-            line-height: 1.625;
-        }
-
-        .leading-tight {
-            line-height: 1.5;
-        }
-
-        .icon-bg {
-            background-color: rgba(3, 2, 19, 0.1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        /* Video styling */
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .grid-cols-2 {
-                grid-template-columns: 1fr;
-            }
-            .grid-cols-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .gap-12 {
-                gap: 2rem;
-            }
-            .gap-16 {
-                gap: 2rem;
-            }
-            h1 {
-                font-size: 1.875rem;
-            }
-            .py-12 {
-                padding-top: 2rem;
-                padding-bottom: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grid-cols-4 {
-                grid-template-columns: 1fr;
-            }
-            .flex {
-                flex-direction: column;
-            }
-            .gap-3 {
-                gap: 0.5rem;
-            }
-            h1 {
-                font-size: 1.5rem;
-            }
-            .container {
-                padding: 0 1rem;
-            }
-        }
-
-        /* Footer */
-        footer {
-            background-color: rgba(236, 236, 240, 0.3);
-        }
-
-        footer a {
-            color: var(--muted-foreground);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.15s ease-in-out;
-        }
-
-        footer a:hover {
-            color: var(--foreground);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .features-section {
-            background-color: rgba(236, 236, 240, 0.3);
-        }
-
-        .material-symbols-outlined {
-          font-variation-settings:
-          'FILL' 0,
-          'wght' 400,
-          'GRAD' 0,
-          'opsz' 24
-        }
-        
-    </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
     <div class="min-h-screen">
-        <!-- Hero Section -->
         <div class="hero-section">
             <div class="container py-12">
                 <div class="grid grid-cols-2 gap-12 items-center">
-                    <!-- Left Column - Content -->
                     <div class="space-y-8">
                         <div class="space-y-6">
                             <h1 class="leading-tight">
@@ -509,7 +23,6 @@
                             </h2>
                         </div>
     
-                        <!-- Email Signup Form -->
                         <div class="card p-6 bg-muted">
                             <div class="space-y-4">
                                 <form id="emailForm" class="flex gap-3">
@@ -527,7 +40,7 @@
                                         </svg>
                                     </button>
                                 </form>
-                               
+                                
                                 <div id="successMessage" class="hidden flex items-center gap-3 text-primary">
                                     <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -538,26 +51,23 @@
                         </div>
                     </div>
     
-                    <!-- Right Column - Video -->
                     <div class="right-col">
                       <div class="video-wrapper">
                         <video autoplay muted loop playsinline preload="metadata">
                           <source src="bixit_custom_compressed.mp4" type="video/mp4" />
                           Your browser does not support the video tag.
                         </video>
-                    
-                        <!-- Pulsante sopra al video -->
+                      
                         <a href="https://bixit-ui.onrender.com/" target="_blank" class="try-button">
                           Try me!
                         </a>
                       </div>
                     </div>
-
+    
                 </div>
             </div>
         </div>
-
-        <!-- Use Cases Section -->
+    
         <div class="py-16">
             <div class="container">
                 <div class="text-center space-y-4 mb-16">
@@ -565,9 +75,8 @@
                         Perfect for different applications across multiple industries
                     </h3>
                 </div>
-
+    
                 <div class="grid grid-cols-4 gap-8">
-                    <!-- Simulation Frameworks -->
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <span class="material-symbols-outlined">
@@ -581,12 +90,11 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Monitoring Systems -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <span class="material-symbols-outlined">
-                                monitoring_heart
+                                monitor_heart
                             </span>
                         </div>
                         <div>
@@ -596,12 +104,11 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Machine Learning -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <span class="material-symbols-outlined">
-                                network_intellingence
+                                network_intelligence
                             </span>
                         </div>
                         <div>
@@ -611,8 +118,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Traffic Analyzers -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <span class="material-symbols-outlined">
@@ -629,8 +135,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Features and Benefits Section -->
+    
         <div class="features-section py-16">
             <div class="container">
                 <div class="text-center space-y-4 mb-16">
@@ -638,9 +143,8 @@
                         Everything you need to handle binary message parsing with confidence and efficiency
                     </h3>
                 </div>
-
+    
                 <div class="grid grid-cols-4 gap-8">
-                    <!-- Wide Applicability -->
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -654,8 +158,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Zero Compromise -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -669,8 +172,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- No Code -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -684,8 +186,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Max Flexibility -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -699,8 +200,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- High Performance -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -714,8 +214,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Easy Integration -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -729,8 +228,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Multi-Format -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -744,8 +242,7 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Anywhere -->
+    
                     <div class="card p-6 text-center space-y-4">
                         <div class="icon-bg p-4">
                             <svg class="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -763,8 +260,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
+    
         <footer class="border-t py-8">
             <div class="container">
                 <div class="flex items-center justify-center gap-6" style="flex-direction: row;">
@@ -779,7 +275,7 @@
             </div>
         </footer>
     </div>
-
+    
     <script>
       // Email form functionality
       document.getElementById('emailForm').addEventListener('submit', async function(e) {
@@ -812,6 +308,6 @@
         }
       });
     </script>
-
+    
 </body>
 </html>
