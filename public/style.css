@@ -6,22 +6,28 @@
 }
 
 :root {
-    --background: #FFFFFF;        /* sfondo principale */
-    --foreground: #111827;        /* testo primario */
-    --card: #F3F4F6;              /* superfici intermedie */
-    --card-foreground: #111827;
-    --primary: #2563EB;           /* accento blu */
-    --primary-foreground: #FFFFFF;   /* testo bianco sopra bottoni blu */
-    --secondary: #F97316;          /* CTA arancione */
-    --secondary-foreground: #FFFFFF;
-    --muted: #E5E7EB;              /* grigio chiaro */
-    --muted-foreground: #78788c;   /* testo secondario */
-    --accent: #2563EB;              /* stesso del primary */
-    --accent-foreground: #FFFFFF;
-    --border: rgba(17, 24, 39, 0.1);   /* grigio scuro molto trasparente */
-    --input-background: #FFFFFF;     /* input su bianco */
+    --background: #0C2234;          /* sfondo principale scuro */
+    --foreground: #FFFFFF;          /* testo primario bianco */
+    --card: #143850;                /* superfici intermedie, blu più chiaro */
+    --card-foreground: #FFFFFF;
+
+    --primary: #3DDCFF;             /* accento celeste brillante */
+    --primary-foreground: #0C2234;  /* testo scuro su bottoni celesti */
+
+    --secondary: #00FFC8;           /* verde acqua */
+    --secondary-foreground: #0C2234;
+
+    --muted: #1A3246;               /* grigio/blu scuro per sfondi */
+    --muted-foreground: #A7C0CC;    /* testo secondario chiaro */
+
+    --accent: #3DDCFF;
+    --accent-foreground: #0C2234;
+
+    --border: rgba(61, 220, 255, 0.2);  /* celeste molto trasparente */
+    --input-background: #143850;       /* input sul blu card */
     --radius: 0.625rem;
 }
+
 
 
 body {
@@ -183,7 +189,7 @@ p {
   min-height: 70vh;  
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+  background: linear-gradient(135deg, #0C2234, #143850);
 }
  
 .hero-section::before {
@@ -457,7 +463,7 @@ video {
 
 /* Footer */
 footer {
-    background-color: rgba(236, 236, 240, 0.3);
+    background-color: #0C2234;
 }
 
 footer a {
