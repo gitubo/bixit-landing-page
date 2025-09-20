@@ -22,15 +22,10 @@
   --input-background: #FFFFFF;
   --radius: 0.625rem;
 
-
---hero-bg-dark: #0a192f;   /* blu notte profondo */
+  --hero-bg-dark: #0a192f;   /* blu notte profondo */
   --hero-bg-mid:  #0f2e46;   /* blu petrolio medio */
-  --hero-bg-light: #0a192f;  /* blu acceso per CTA hover */
+  --hero-bg-light: #1e40af;  /* blu acceso per CTA hover */
 }
-
-
-
-
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -214,6 +209,10 @@ p {
 
 .hero-section h1 {
   color: #FFFFFF;
+}
+
+.hero-section h2 {
+  color:  var(--muted);
 }
 
 .hero-section .right-col {
