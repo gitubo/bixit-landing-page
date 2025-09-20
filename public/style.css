@@ -251,23 +251,24 @@ p {
   position: absolute;
   bottom: 1.75rem;
   right: 1.75rem;
-  background: var(--hero-bg-mid);
-  color: #FFFFFF;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  font-size: 1.5rem;
-  text-decoration: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   transform: rotate(-30deg);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .try-button:hover {
+  opacity: 0.9;
   transform: rotate(-30deg) scale(1.1);
-  background: var(--hero-bg-light);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
+
 
 
  
