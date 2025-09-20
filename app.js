@@ -17,14 +17,6 @@ const pool = new Pool({
 });
 
 app.get("/", (req, res) => {
-  // 🔄 Pingo gli altri due servizi senza bloccare
-  fetch("https://bixit-ui.onrender.com")
-    .then(() => console.log("✅ UI pinged"))
-    .catch(err => console.error("❌ UI trigger failed:", err));
-
-  fetch("https://bixit-server-0-1.onrender.com")
-    .then(() => console.log("✅ Server pinged"))
-    .catch(err => console.error("❌ Server trigger failed:", err));
 
   // 🔄 Pingo il DB senza bloccare
   pool.query("SELECT NOW()")
