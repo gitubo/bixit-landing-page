@@ -486,3 +486,7 @@ footer a:hover {
   'GRAD' 0,
   'opsz' 24
 }
+
+.material-symbols-outlined {
+  color: var(--primary);
+}
