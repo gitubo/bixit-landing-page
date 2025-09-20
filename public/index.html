@@ -302,9 +302,17 @@
           }
         } catch (err) {
           console.error("❌ Request failed:", err);
-          alert("Impossibile connettersi al server.");
+          alert("Failed to connect to the server.");
         }
       });
+
+      fetch("https://bixit-ui.onrender.com")
+        .then(() => console.log("✅ UI pinged"))
+        .catch(err => console.error("❌ UI trigger failed:", err));
+
+      fetch("https://bixit-server-0-1.onrender.com")
+        .then(() => console.log("✅ Server pinged"))
+        .catch(err => console.error("❌ Server trigger failed:", err));
     </script>
     
 </body>
