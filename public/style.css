@@ -206,9 +206,12 @@ p {
   z-index: 1; /* porta sopra il contenuto */
 }
 
-.hero-section h1,
-.hero-section h2 {
+.hero-section h1 {
   color: #FFFFFF;
+}
+
+.hero-section h2 {
+  color: var(--muted-foreground);
 }
 
 .hero-section .right-col {
@@ -244,26 +247,26 @@ p {
 }
  
 .try-button {
-      position: absolute;
-      bottom: 1.75rem;
-      right: 1.75rem;
-      background: #bfdbfe;     /* blu chiaro coerente con hero (blue-200) */
-      color: #1e3a8a;          /* blu scuro per contrasto */
-      padding: 0.4rem 0.8rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      font-size: 1.5rem;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-      transform: rotate(-30deg) ;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-    
-    .try-button:hover {
-      transform: rotate(-30deg) scale(1.1);
-      background: #93c5fd;   /* leggermente più saturo al hover */
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
+  position: absolute;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  background: #1e3a8a;   /* blu scuro coerente con hero */
+  color: #FFFFFF;        /* testo bianco per contrasto */
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transform: rotate(-30deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.try-button:hover {
+  transform: rotate(-30deg) scale(1.1);
+  background: #3b82f6;   /* blu più chiaro in hover */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
 
  
