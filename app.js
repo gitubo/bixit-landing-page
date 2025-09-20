@@ -16,31 +16,28 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false } // Render richiede SSL
 });
 
-// GET "/" ora serve il file index.html
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
+  // 🔄 Pingo gli altri due servizi senza bloccare
+  fetch("https://bixit-ui.onrender.com")
+    .then(() => console.log("✅ UI pinged"))
+    .catch(err => console.error("❌ UI trigger failed:", err));
 
-  fetch("https://bixit-ui.onrender.com").catch(err => console.error("❌ UI trigger failed:", err));
-  fetch("https://bixit-server-0-1.onrender.com").catch(err => console.error("❌ Server trigger failed:", err));
+  fetch("https://bixit-server-0-1.onrender.com")
+    .then(() => console.log("✅ Server pinged"))
+    .catch(err => console.error("❌ Server trigger failed:", err));
 
-  try {
-    const nowResult = await pool.query("SELECT NOW()");
-    const countResult = await pool.query("SELECT COUNT(1) FROM waiting_list");
+  // 🔄 Pingo il DB senza bloccare
+  pool.query("SELECT NOW()")
+    .then(result => {
+      console.log("✅ DB ping success:", result.rows[0].now);
+    })
+    .catch(err => {
+      console.error("❌ DB ping failed:", err.message);
+    });
 
-    const dbMessage = `
-      ✅ Connected to DB! Current time: ${nowResult.rows[0].now} <br>
-      Waiting list count: ${countResult.rows[0].count}
-    `;
-
-    // Invia la pagina HTML con il messaggio nel placeholder
-    const filePath = path.join(__dirname, "public", "index.html");
-    let html = require("fs").readFileSync(filePath, "utf8");
-    html = html.replace('Loading...', dbMessage);
-    res.send(html);
-
-  } catch (err) {
-    console.error("❌ DB error:", err);
-    res.send(`<p>Database connection failed: ${err.message}</p>`);
-  }
+  // 📄 Rispondo subito servendo index.html senza attese
+  const filePath = path.join(__dirname, "public", "index.html");
+  res.sendFile(filePath);
 });
 
 // Endpoint per aggiungere email
