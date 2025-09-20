@@ -6,22 +6,28 @@
 }
 
 :root {
-    --background: #FFFFFF;        /* sfondo principale */
-    --foreground: #111827;        /* testo primario */
-    --card: #F3F4F6;              /* superfici intermedie */
-    --card-foreground: #111827;
-    --primary: #2563EB;           /* accento blu */
-    --primary-foreground: #FFFFFF;   /* testo bianco sopra bottoni blu */
-    --secondary: #F97316;          /* CTA arancione */
-    --secondary-foreground: #FFFFFF;
-    --muted: #E5E7EB;              /* grigio chiaro */
-    --muted-foreground: #78788c;   /* testo secondario */
-    --accent: #2563EB;             /* stesso del primary */
-    --accent-foreground: #FFFFFF;
-    --border: rgba(17, 24, 39, 0.1);   /* grigio scuro molto trasparente */
-    --input-background: #FFFFFF;   /* input su bianco */
-    --radius: 0.625rem;
+  --background: #FFFFFF;
+  --foreground: #111827;
+  --card: #F3F4F6;
+  --card-foreground: #111827;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F97316;
+  --secondary-foreground: #FFFFFF;
+  --muted: #E5E7EB;
+  --muted-foreground: #78788c;
+  --accent: #2563EB;
+  --accent-foreground: #FFFFFF;
+  --border: rgba(17, 24, 39, 0.1);
+  --input-background: #FFFFFF;
+  --radius: 0.625rem;
+
+  /* 🎨 Nuovi colori per hero section */
+  --hero-bg-dark: #0f172a;   /* blu molto scuro (hero background) */
+  --hero-bg-mid: #1e3a8a;    /* blu medio (CTA Try me) */
+  --hero-bg-light: #3b82f6;  /* blu chiaro (hover Try me) */
 }
+
 
 
 
@@ -182,12 +188,12 @@ p {
 .hero-section {
   position: relative;
   overflow: hidden;
-  min-height: 70vh;  
+  min-height: 70vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #0C2234, #143850); /* scuro */
-  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--hero-bg-dark), var(--hero-bg-mid));
 }
+
 
 .hero-section::before {
   content: '';
@@ -211,7 +217,7 @@ p {
 }
 
 .hero-section h2 {
-  color: var(--muted-foreground);
+  color: var(--card);  /* più chiaro, come lo sfondo delle card */
 }
 
 .hero-section .right-col {
@@ -250,8 +256,8 @@ p {
   position: absolute;
   bottom: 1.75rem;
   right: 1.75rem;
-  background: #1e3a8a;   /* blu scuro coerente con hero */
-  color: #FFFFFF;        /* testo bianco per contrasto */
+  background: var(--hero-bg-mid);
+  color: #FFFFFF;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   font-weight: bold;
@@ -264,7 +270,7 @@ p {
 
 .try-button:hover {
   transform: rotate(-30deg) scale(1.1);
-  background: #3b82f6;   /* blu più chiaro in hover */
+  background: var(--hero-bg-light);
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
