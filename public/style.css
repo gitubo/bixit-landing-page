@@ -252,13 +252,14 @@ p {
   bottom: 1.75rem;
   right: 1.75rem;
   border-radius: var(--radius);
-  font-size: 1rem;
+  font-size: 1.75rem;
   font-weight: 500;
   cursor: pointer;
   border: none;
   padding: 0.5rem 1rem;
   background-color: var(--primary);
   color: var(--primary-foreground);
+  text-decoration: none; 
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   transform: rotate(-30deg);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
