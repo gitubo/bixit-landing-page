@@ -109,10 +109,6 @@ p {
     line-height: 1.5;
 }
 
-.text-hero {
-    color: var(--foreground)
-}
-
 /* Layout */
 .min-h-screen {
     min-height: 100vh;
