@@ -9,16 +9,27 @@
 </head>
 <body>
     <div class="min-h-screen">
+        <header class="header">
+            <div class="container flex items-center justify-between">
+                <a href="#" class="logo">Bixit</a>
+                <nav class="navbar">
+                    <a href="#how-it-works" class="nav-link">How it works</a>
+                    <a href="#use-cases" class="nav-link">Use cases</a>
+                    <a href="#features" class="nav-link">Features</a>
+                </nav>
+            </div>
+        </header>
+
         <div class="hero-section">
             <div class="container py-12">
                 <div class="grid grid-cols-2 gap-12 items-center">
                     <div class="space-y-8">
                         <div class="space-y-6">
-                            <h1 class="leading-tight">
-                                Build binary parsers in <strong>minutes</strong>, not weeks
+                            <h1 class="leading-tight text-hero">
+                                Build binary parsers<br>in <strong>minutes</strong>, not weeks
                             </h1>
-                            <h2 class="text-muted-foreground leading-relaxed">
-                                Tired of writing and managing a specific parser every time a new binary format shows up?
+                            <h2 class="text-hero leading-relaxed">
+                                Tired of coding and integrating a specific parser<br>every time a new binary format shows up?
                             </h2>
                         </div>
     
@@ -62,17 +73,63 @@
                         </a>
                       </div>
                     </div>
-    
                 </div>
             </div>
         </div>
+
+        <div class="how-it-works-section py-16" id="how-it-works">
+    <div class="container">
+<div class="text-center space-y-4 mb-16">
+        <h3>How It Works</h3>
+        <h4>Focus on your business logic, not the mediation layer</h4>
+        <div class="how-it-works-grid grid grid-cols-3 gap-16">
+            <div class="step">
+                <div class="icon-bg p-4 mb-4">
+                    <span class="material-symbols-outlined">
+                        code
+                    </span>
+                </div>
+                <h4>Integrate the library</h4>
+                <p class="text-muted-foreground">
+                    Integrate Bixit into your app using one parsering function, just once.
+                </p>
+            </div>
+            <span class="arrow hidden lg:flex"></span>
+            <div class="step">
+                <div class="icon-bg p-4 mb-4">
+                    <span class="material-symbols-outlined">
+                        create
+                    </span>
+                </div>
+                <h4>Define Your Formats</h4>
+                <p class="text-muted-foreground">
+                    Prepare simple config files describing the message structures you want to handle.
+                </p>
+            </div>
+            <span class="arrow hidden lg:flex"></span>
+            <div class="step">
+                <div class="icon-bg p-4 mb-4">
+                    <span class="material-symbols-outlined">
+                        upload_file
+                    </span>
+                </div>
+                <h4>Upload configuration</h4>
+                <p class="text-muted-foreground">
+                    Copy your config files and let Bixit automatically applies your defined format.
+                </p>
+            </div>
+        </div>
+</div>
+    </div>
+</div>
     
-        <div class="py-16">
+        <div class="use-cases-section py-16" id="use-cases">
             <div class="container">
                 <div class="text-center space-y-4 mb-16">
-                    <h3>
+                    <h3>Use Cases</h3>
+		    <h4>
                         Perfect for different applications across multiple industries
-                    </h3>
+                    </h4>
                 </div>
     
                 <div class="grid grid-cols-4 gap-8">
@@ -135,12 +192,13 @@
             </div>
         </div>
     
-        <div class="features-section py-16">
+        <div class="features-section py-16" id="features">
             <div class="container">
                 <div class="text-center space-y-4 mb-16">
-                    <h3>
+<h3>Features</h3>
+                    <h4>
                         Everything you need to handle binary message parsing with confidence and efficiency
-                    </h3>
+                    </h4>
                 </div>
     
                 <div class="grid grid-cols-4 gap-8">
@@ -259,14 +317,14 @@
             </div>
         </div>
     
-        <footer class="border-t py-8">
+        <footer class="footer py-8">
             <div class="container">
                 <div class="flex items-center justify-center gap-6" style="flex-direction: row;">
-                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    <p style="font-size: 0.875rem; color: var(--muted);">
                         © 2025 Bixit. All rights reserved.
                     </p>
                     <div class="flex gap-6">
-                        <a href="mailto:mosca.massimiliano@gmail.com">Contact</a>
+                        <a href="mailto:mosca.massimiliano@gmail.com" style="color: var(--muted);">Contact</a>
                     </div>
                 </div>
             </div>
