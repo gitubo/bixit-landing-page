@@ -283,6 +283,48 @@ p {
 .try-button:hover {
   transform: rotate(-30deg) translate(40px, 40px) scale(1.1);
 }
+
+/* Wrapper per rendere il video cliccabile */
+.video-link {
+  position: relative;
+  display: block;
+  cursor: pointer; /* Rende l'intera area cliccabile */
+  width: 100%;
+}
+ 
+/* Video */
+.video-link video {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 40px -10px rgba(0,0,0,0.25);
+  background: black;
+}
+
+.video-try-button {
+  position: absolute;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  border-radius: var(--radius);
+  font-size: 1.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+opacity: 0.9;
+  color: var(--primary-foreground);
+  text-decoration: none; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transform: rotate(-30deg) translate(40px, 40px) ;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.video-try-button:hover {
+  
+  transform: rotate(-30deg) translate(40px, 40px)  scale(1.1);
+}
  
 /* Components */
 .card {
