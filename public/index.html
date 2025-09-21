@@ -349,10 +349,10 @@ Bixit, on the other hand, is a tool that helps you read and write arbitrary bina
 
             <details class="faq-item">
                 <summary class="faq-question">
-                    È possibile aggiornare i formati binari senza ricompilare l'applicazione?
+                    Is it possible to update binary formats without recompiling the application?
                 </summary>
                 <p class="faq-answer">
-                    Sì. Ti basta copiare i file di configurazione aggiornati nella directory a cui la tua applicazione ha accesso. Bixit li caricherà automaticamente senza richiedere alcuna ricompilazione, semplificando la manutenzione.
+                   Yes. Simply copy the updated configuration files to the directory your application has access to. Bixit will automatically load them without requiring any recompilation, simplifying maintenance.
                 </p>
             </details>
             <details class="faq-item">
@@ -429,6 +429,51 @@ Bixit, on the other hand, is a tool that helps you read and write arbitrary bina
       fetch("https://bixit-server-0-1.onrender.com")
         .then(() => console.log("✅ Server pinged"))
         .catch(err => console.error("❌ Server trigger failed:", err));
+
+// Aggiungi questo codice alla fine del tuo file index.html, prima di </body>
+
+document.addEventListener('DOMContentLoaded', () => {
+    const details = document.querySelectorAll("details");
+
+    details.forEach(item => {
+        item.addEventListener("toggle", (event) => {
+            const content = item.querySelector(".faq-answer");
+            
+            if (item.open) {
+                // Se l'accordion si sta aprendo
+                
+                // Imposta l'altezza a 0 per preparare la transizione
+                content.style.height = `0px`;
+                content.style.overflow = 'hidden';
+
+                // Chiudi gli altri accordion per mantenere solo uno aperto
+                details.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.open) {
+                        otherItem.removeAttribute("open");
+                    }
+                });
+
+                // Applica una piccola pausa per permettere al browser di applicare lo stile
+                setTimeout(() => {
+                    // Imposta l'altezza al valore esatto del contenuto per l'animazione
+                    content.style.height = `${content.scrollHeight}px`;
+                }, 0);
+
+            } else {
+                // Se l'accordion si sta chiudendo
+                
+                // Imposta l'altezza al suo valore corrente
+                content.style.height = `${content.scrollHeight}px`;
+                
+                // Applica una piccola pausa per permettere al browser di applicare lo stile
+                setTimeout(() => {
+                    // Imposta l'altezza a 0 per la transizione di chiusura
+                    content.style.height = `0px`;
+                }, 0);
+            }
+        });
+    });
+});
     </script>
     
 </body>
