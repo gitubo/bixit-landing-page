@@ -315,6 +315,65 @@
                 </div>
             </div>
         </div>
+
+<div class="faq-section py-16">
+    <div class="container">
+        <div class="text-center space-y-4 mb-8">
+            <h3>FAQ</h3>
+            <h4>All the answers you need</h4>
+        </div>
+
+        <div class="faq-accordion space-y-4">
+            <details class="faq-item">
+                <summary class="faq-question">
+                    What is the difference between Bixit and other binary parsers?
+                </summary>
+                <p class="faq-answer">
+                    Unlike other parsers that require complex programming for each new format, Bixit allows you to define binary formats using simple configuration files, greatly reducing time. <br>There is no need to recompile anything, and deployment consists of simply copying a JSON file into the Bixit catalog.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    What is the difference with CBOR encoding?
+                </summary>
+                <p class="faq-answer">
+                    CBOR is an efficient data serialization format for cases where you have long series of numerical data. Its efficiency compared to JSON format drops dramatically when you have many single numeric fields or character strings.<br>
+Bixit, on the other hand, is a tool that helps you read and write arbitrary binary formats, based on a format description that you provide yourself.
+<br><br>With CBOR: Your applications would encode a “name” and an “age” following the standard CBOR rules. The receiving application would use a generic CBOR decoder to read the message, knowing that ‘name’ is a string and “age” is an integer, because this is defined in the standard.
+<br><br>With Bixit: Imagine you have a sensor that produces a proprietary binary message, where the first 11 bits are an identifier, the next 5 bits are a value, and so on. CBOR cannot decode this format, because it is not a CBOR standard—in this case, you would use Bixit.
+<br><br>A proprietary binary message is always more efficient than the same message in CBOR, but CBOR introduces greater flexibility—with Bixit, you also solve this need for flexibility.
+                </p>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    È possibile aggiornare i formati binari senza ricompilare l'applicazione?
+                </summary>
+                <p class="faq-answer">
+                    Sì. Ti basta copiare i file di configurazione aggiornati nella directory a cui la tua applicazione ha accesso. Bixit li caricherà automaticamente senza richiedere alcuna ricompilazione, semplificando la manutenzione.
+                </p>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">
+                    What programming knowledge do I need to get the most out of Bixit?
+                </summary>
+                <p class="faq-answer">
+                    Adding a new binary format or correcting any errors in an already supported format does not require any programming skills. <br>Bixit bases all its decoding logic on configuration files written in JSON that describe the structure of the formats. <br>Furthermore, the use of simplified interfaces for creating these files completely eliminates the need for a programmer—a domain expert can configure Bixit to support a new binary format on their own.
+                </p>
+            </details>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">
+                    Is the Bixit library free?
+                </summary>
+                <p class="faq-answer">
+                    The <a href="https://github.com/gitubo/bixit" style="color: var(--muted-foreground);">Bixit library</a>, written in C++, is an open-source project released under the MIT license. This means you can use and modify Bixit as you wish, and even integrate it into commercial projects.
+                </p>
+            </details>
+        </div>
+    </div>
+</div>
     
         <footer class="footer py-8">
             <div class="container">
