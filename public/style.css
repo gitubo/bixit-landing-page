@@ -89,7 +89,7 @@ h2 {
 
 h3 {
     font-size: 1.125rem;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.4;
     margin-bottom: 0.5rem;
     color: var(--deep-blue);
@@ -110,7 +110,7 @@ p {
 }
 
 .text-hero {
-    color: #111827; /* Change to a dark color for readability on light background */
+    color: var(--foreground)
 }
 
 /* Layout */
@@ -220,6 +220,10 @@ p {
 
 .mb-4 {
     margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
 }
 
 .mb-16 {
@@ -431,28 +435,7 @@ video {
     text-align: center;
 }
 
-.how-it-works-grid .arrow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 60px;
-    height: 4px;
-    background-color: var(--deep-blue); /* Freccia a linea */
-    border-radius: 2px;
-}
 
-.how-it-works-grid .arrow::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    border-top: 4px solid var(--deep-blue); /* Punta della freccia */
-    border-right: 4px solid var(--deep-blue); /* Punta della freccia */
-}
 
 /* Responsive */
 @media (max-width: 1024px) {
